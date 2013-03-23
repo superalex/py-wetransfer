@@ -15,11 +15,11 @@ And download it! :)
 
 Requirements
 =============
+
 python
+
 requests
 
 .. code-block:: console
 
     pip install requests
-
-
