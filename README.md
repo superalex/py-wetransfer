@@ -9,6 +9,7 @@ Usage
 You should have a we transfer address similar to https://www.wetransfer.com/downloads/XXXXXXXXXX/YYYYYYYYY/ZZZZZZZZ
 
 So execute:
+
     python wetransfer.py -u https://www.wetransfer.com/downloads/XXXXXXXXXXXXXXXXXXXXXXXXX/YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY/ZZZZZ
 
 And download it! :)
@@ -19,7 +20,5 @@ Requirements
 python
 
 requests
-
-.. code-block:: console
 
     pip install requests
