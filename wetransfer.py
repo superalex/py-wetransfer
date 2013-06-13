@@ -10,7 +10,7 @@ def download(file_id, recipient_id, security_hash):
     r = requests.get(url)
     download_data = json.loads(r.content)
 
-    print "Downloading..."
+    print "Downloading {0}...".format(url)
     if download_data.has_key('direct_link'):
         content_info_string = parse_qs(urlparse(download_data['direct_link']).query)['response-content-disposition'][0]
         file_name = re.findall('filename="(.*?)"', content_info_string)[0]
@@ -42,6 +42,12 @@ def extract_params(url):
     return [file_id, recipient_id, security_hash]
 
 
+def extract_url_redirection(url):
+    """
+        Follow the url redirection if necesary
+    """
+    return requests.get(url).url
+
 def usage():
     print """
 You should have a we transfer address similar to https://www.wetransfer.com/downloads/XXXXXXXXXX/YYYYYYYYY/ZZZZZZZZ
@@ -67,6 +73,7 @@ def main(argv):
         if not url:
             usage()
 
+        url = extract_url_redirection(url)
         [file_id, recipient_id, security_hash] = extract_params(url)
         download(file_id, recipient_id, security_hash)
 
