@@ -13,7 +13,7 @@ def download(file_id, recipient_id, security_hash):
     print "Downloading {0}...".format(url)
     if download_data.has_key('direct_link'):
         content_info_string = parse_qs(urlparse(download_data['direct_link']).query)['response-content-disposition'][0]
-        file_name = re.findall('filename="(.*?)"', content_info_string)[0]
+        file_name = re.findall('filename="(.*?)"', content_info_string)[0].encode('ascii', 'ignore')
         r = requests.get(download_data['direct_link'])
     else:
         file_name = download_data['fields']['filename']
