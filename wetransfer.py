@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from urlparse import urlparse, parse_qs
-import requests, sys, json, re, getopt
+import requests, sys, json, re, getopt, sys
 
 DOWNLOAD_URL_PARAMS_PREFIX = 'downloads/'
+CHUNK_SIZE=1024
 
 def download(file_id, recipient_id, security_hash):
     url = "https://www.wetransfer.com/api/v1/transfers/{0}/download?recipient_id={1}&security_hash={2}&password=&ie=false".format(file_id, recipient_id, security_hash)
@@ -14,13 +15,22 @@ def download(file_id, recipient_id, security_hash):
     if download_data.has_key('direct_link'):
         content_info_string = parse_qs(urlparse(download_data['direct_link']).query)['response-content-disposition'][0]
         file_name = re.findall('filename="(.*?)"', content_info_string)[0]
-        r = requests.get(download_data['direct_link'])
+        r = requests.get(download_data['direct_link'], stream=True)
     else:
         file_name = download_data['fields']['filename']
-        r = requests.post(download_data['formdata']['action'], data=download_data["fields"])
+        r = requests.post(download_data['formdata']['action'], data=download_data["fields"], stream=True)
 
+    file_size = int(r.headers["Content-Length"])
     output_file = open(file_name, 'w')
-    output_file.write(r.content)
+    counter = 0
+    for chunk in r.iter_content(chunk_size=CHUNK_SIZE):
+        if chunk:
+            output_file.write(chunk)
+            output_file.flush()
+            sys.stdout.write('\r{0}% {1}/{2}'.format((counter * CHUNK_SIZE) * 100/ file_size, counter * CHUNK_SIZE, file_size))
+            counter += 1
+
+    sys.stdout.write('\r100% {0}/{1}\n'.format(file_size, file_size))
     output_file.close()
     print "Finished! {0}".format(file_name)
 
