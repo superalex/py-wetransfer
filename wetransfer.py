@@ -28,7 +28,7 @@ def download(file_id, recipient_id, security_hash):
         if chunk:
             output_file.write(chunk)
             output_file.flush()
-            sys.stdout.write('\r{0}% {1}/{2}'.format((counter * CHUNK_SIZE) * 100/ file_size, counter * CHUNK_SIZE, file_size))
+            sys.stdout.write('\r{0}% {1}/{2}'.format((counter * CHUNK_SIZE) * 100 / file_size, counter * CHUNK_SIZE, file_size))
             counter += 1
 
     sys.stdout.write('\r100% {0}/{1}\n'.format(file_size, file_size))
