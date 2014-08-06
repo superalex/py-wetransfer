@@ -81,6 +81,9 @@ def main(argv):
             if opt in ('-h', '--help'):
                 usage()
 
+        if argv[0].find('http') == 0:
+            url = argv[0]
+
         if not url:
             usage()
 
