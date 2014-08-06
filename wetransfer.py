@@ -1,10 +1,11 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from urlparse import urlparse, parse_qs
 import requests, sys, json, re, getopt, sys
 
-DOWNLOAD_URL_PARAMS_PREFIX = 'downloads/'
-CHUNK_SIZE=1024
+DOWNLOAD_URL_PARAMS_PREFIX = "downloads/"
+CHUNK_SIZE = 1024
 
 def download(file_id, recipient_id, security_hash):
     url = "https://www.wetransfer.com/api/v1/transfers/{0}/download?recipient_id={1}&security_hash={2}&password=&ie=false".format(file_id, recipient_id, security_hash)
@@ -27,7 +28,7 @@ def download(file_id, recipient_id, security_hash):
         if chunk:
             output_file.write(chunk)
             output_file.flush()
-            sys.stdout.write('\r{0}% {1}/{2}'.format((counter * CHUNK_SIZE) * 100/ file_size, counter * CHUNK_SIZE, file_size))
+            sys.stdout.write('\r{0}% {1}/{2}'.format((counter * CHUNK_SIZE) * 100 / file_size, counter * CHUNK_SIZE, file_size))
             counter += 1
 
     sys.stdout.write('\r100% {0}/{1}\n'.format(file_size, file_size))
