@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# Download WeTransfer files
+#
+# VERSION       :1.0
+# DATE          :2014-08-01
+# AUTHOR        :Alejandro Alonso <https://github.com/superalex>
+# URL           :https://github.com/superalex/py-wetransfer
+# DEPENDS       :pip install requests
+# UPSTREAM      :https://github.com/superalex/py-wetransfer
 
 from urlparse import urlparse, parse_qs
 import requests, sys, json, re, getopt, sys
