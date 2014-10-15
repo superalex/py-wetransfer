@@ -8,7 +8,6 @@
 # AUTHOR        :Alejandro Alonso <https://github.com/superalex>
 # URL           :https://github.com/superalex/py-wetransfer
 # DEPENDS       :pip install requests
-# UPSTREAM      :https://github.com/superalex/py-wetransfer
 
 from urlparse import urlparse, parse_qs
 import requests, sys, json, re, getopt, sys
