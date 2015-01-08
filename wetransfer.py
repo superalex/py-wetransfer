@@ -30,7 +30,7 @@ def download(file_id, recipient_id, security_hash):
         r = requests.post(download_data['formdata']['action'], data=download_data["fields"], stream=True)
 
     file_size = int(r.headers["Content-Length"])
-    output_file = open(file_name, 'w')
+    output_file = open(file_name, 'wb')
     counter = 0
     for chunk in r.iter_content(chunk_size=CHUNK_SIZE):
         if chunk:
