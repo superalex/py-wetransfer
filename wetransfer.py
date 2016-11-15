@@ -27,10 +27,10 @@ def download(file_id, recipient_id, security_hash):
 
     print "Downloading {0}...".format(url)
     if 'direct_link' in download_data:
-        content_info_string = parse_qs(
-            urlparse(download_data['direct_link']).query)
-        file_name_data = content_info_string['filename']
-        file_name = file_name_data[0]
+        direct_link_path = urlparse(download_data['direct_link']).path
+        direct_link_path = direct_link_path.split('/')
+        file_name = direct_link_path[-1]
+
         r = requests.get(download_data['direct_link'], stream=True)
     else:
         file_name = download_data['fields']['filename']
